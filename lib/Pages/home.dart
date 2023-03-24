@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../routes.dart';
+
 class Home extends StatelessWidget {
   const Home({super.key});
 
@@ -99,7 +101,9 @@ class Home extends StatelessWidget {
                   borderRadius: BorderRadius.circular(30),
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamed(AppRoutes.mangoScreen);
+              },
               child: const Text(
                 'Get Started',
                 style: TextStyle(
