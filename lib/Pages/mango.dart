@@ -2,8 +2,16 @@ import 'package:flutter/material.dart';
 
 import '../routes.dart';
 
-class Mango extends StatelessWidget {
+class Mango extends StatefulWidget {
   const Mango({super.key});
+
+  @override
+  State<Mango> createState() => _MangoState();
+}
+
+class _MangoState extends State<Mango> {
+  int contador = 0;
+  double preco = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -42,14 +50,11 @@ class Mango extends StatelessWidget {
             Positioned(
               left: 55,
               top: -20,
-              // child: Card(
-              //   color: Color.fromARGB(255, 248, 248, 248),
               child: Image.asset(
                 'assets/manga.png',
                 width: 290,
                 height: 290,
               ),
-              // ),
             ),
             Positioned(
               left: 120,
@@ -57,7 +62,14 @@ class Mango extends StatelessWidget {
               child: Row(
                 children: [
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      setState(() {
+                        if (contador > 0) {
+                          contador--;
+                          preco -= 1.0;
+                        }
+                      });
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
                       shape: RoundedRectangleBorder(
@@ -79,7 +91,12 @@ class Mango extends StatelessWidget {
               child: Row(
                 children: [
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      setState(() {
+                        contador++;
+                        preco += 1.0;
+                      });
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
                       shape: RoundedRectangleBorder(
@@ -110,9 +127,9 @@ class Mango extends StatelessWidget {
                       ),
                       minimumSize: const Size(60, 60),
                     ),
-                    child: const Text(
-                      '2',
-                      style: TextStyle(
+                    child: Text(
+                      '$contador',
+                      style: const TextStyle(
                         fontSize: 28,
                       ),
                     ),
@@ -137,18 +154,18 @@ class Mango extends StatelessWidget {
               ),
             ),
             Positioned(
-              left: 290,
+              left: 280,
               top: 350,
               child: Row(
-                children: const [
+                children: [
                   Text(
-                    '\$2,00',
-                    style: TextStyle(
+                    '\$' '$contador' '.00',
+                    style: const TextStyle(
                         fontSize: 30,
                         color: Color.fromARGB(149, 148, 109, 253),
                         fontWeight: FontWeight.bold),
                   ),
-                  Text(
+                  const Text(
                     'PC',
                     style: TextStyle(
                       fontSize: 12,

@@ -2,11 +2,27 @@ import 'package:flutter/material.dart';
 
 import '../routes.dart';
 
-class Check extends StatelessWidget {
+class Check extends StatefulWidget {
   const Check({super.key});
 
   @override
+  State<Check> createState() => _CheckState();
+}
+
+class _CheckState extends State<Check> {
+  int contador = 0;
+  double preco = 0;
+
+  double precoP = 0;
+  int contadorP = 0;
+
+  double stotal = 0;
+  double total = 0;
+
+  @override
   Widget build(BuildContext context) {
+    stotal = preco + precoP;
+    total = stotal;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 245, 244, 244),
@@ -99,26 +115,35 @@ class Check extends StatelessWidget {
               ),
             ),
           ),
-          const Positioned(
+          Positioned(
             top: 130,
             left: 150,
             child: Text(
-              '80 pc',
-              style: TextStyle(
+              '$contador' 'pc',
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
               ),
             ),
           ),
+
           Positioned(
             left: 250,
             top: 85,
-            child: Card(
-              color: const Color.fromARGB(245, 235, 228, 236),
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromARGB(245, 235, 228, 236),
+                shape: const CircleBorder(),
+                padding: const EdgeInsets.all(0),
               ),
+              onPressed: () {
+                setState(() {
+                  if (contador > 0) {
+                    contador--;
+                    preco -= 2;
+                  }
+                });
+              },
               child: const SizedBox(
                 width: 30,
                 height: 30,
@@ -132,12 +157,18 @@ class Check extends StatelessWidget {
           Positioned(
             left: 288,
             top: 85,
-            child: Card(
-              color: const Color.fromARGB(255, 155, 105, 196),
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromARGB(255, 155, 105, 196),
+                shape: const CircleBorder(),
+                padding: const EdgeInsets.all(0),
               ),
+              onPressed: () {
+                setState(() {
+                  contador++;
+                  preco += 2;
+                });
+              },
               child: const SizedBox(
                 width: 30,
                 height: 30,
@@ -157,10 +188,10 @@ class Check extends StatelessWidget {
             left: 255,
             top: 135,
             child: Row(
-              children: const [
+              children: [
                 Text(
-                  '\$160.00',
-                  style: TextStyle(
+                  '\$' '$preco' '0',
+                  style: const TextStyle(
                       fontSize: 16,
                       color: Colors.black,
                       fontWeight: FontWeight.bold),
@@ -250,10 +281,10 @@ class Check extends StatelessWidget {
             left: 150,
             top: 270,
             child: Row(
-              children: const [
+              children: [
                 Text(
-                  '4 KG',
-                  style: TextStyle(
+                  '$contadorP' 'KG',
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                   ),
@@ -263,15 +294,24 @@ class Check extends StatelessWidget {
           ),
 
           //------------------ + e -
+
           Positioned(
             left: 250,
             top: 220,
-            child: Card(
-              color: const Color.fromARGB(245, 235, 228, 236),
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromARGB(245, 235, 228, 236),
+                shape: const CircleBorder(),
+                padding: const EdgeInsets.all(0),
               ),
+              onPressed: () {
+                setState(() {
+                  if (contadorP > 0) {
+                    contadorP--;
+                    precoP -= 37.50;
+                  }
+                });
+              },
               child: const SizedBox(
                 width: 30,
                 height: 30,
@@ -285,12 +325,18 @@ class Check extends StatelessWidget {
           Positioned(
             left: 288,
             top: 220,
-            child: Card(
-              color: const Color.fromARGB(255, 155, 105, 196),
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromARGB(255, 155, 105, 196),
+                shape: const CircleBorder(),
+                padding: const EdgeInsets.all(0),
               ),
+              onPressed: () {
+                setState(() {
+                  contadorP++;
+                  precoP += 37.50;
+                });
+              },
               child: const SizedBox(
                 width: 30,
                 height: 30,
@@ -310,10 +356,10 @@ class Check extends StatelessWidget {
             left: 255,
             top: 275,
             child: Row(
-              children: const [
+              children: [
                 Text(
-                  '\$150.00',
-                  style: TextStyle(
+                  '\$' '$precoP',
+                  style: const TextStyle(
                       fontSize: 16,
                       color: Colors.black,
                       fontWeight: FontWeight.bold),
@@ -425,7 +471,44 @@ class Check extends StatelessWidget {
               width: 70,
               height: 33,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        String codd = "";
+                        return AlertDialog(
+                          title: const Text('Digite um cod'),
+                          content: const TextField(
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: "Cod promocional",
+                            ),
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('Cancelar',
+                                  style: TextStyle(color: Colors.amber)),
+                            ),
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  if (codd == "pulsati") {
+                                    setState(() {
+                                      total += stotal - 0.05;
+                                    });
+                                  }
+                                },
+                                child: const Text(
+                                  "Aplicar",
+                                  style: TextStyle(color: Colors.amber),
+                                ))
+                          ],
+                        );
+                      });
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 155, 105, 196),
                   elevation: 0,
@@ -486,24 +569,24 @@ class Check extends StatelessWidget {
                   fontWeight: FontWeight.bold),
             ),
           ),
-          const Positioned(
+          Positioned(
             right: 30,
             top: 490,
             child: Text(
-              '\$220.00',
-              style: TextStyle(
+              '\$ ' '$stotal',
+              style: const TextStyle(
                   fontSize: 14,
                   color: Color.fromARGB(255, 0, 0, 0),
                   fontWeight: FontWeight.bold),
             ),
           ),
 
-          const Positioned(
+          Positioned(
             right: 30,
             top: 570,
             child: Text(
-              '\$220.00',
-              style: TextStyle(
+              '\$' '$total',
+              style: const TextStyle(
                   fontSize: 14,
                   color: Color.fromARGB(255, 0, 0, 0),
                   fontWeight: FontWeight.bold),
