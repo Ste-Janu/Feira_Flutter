@@ -490,20 +490,24 @@ class _CheckState extends State<Check> {
                                 Navigator.of(context).pop();
                               },
                               child: const Text('Cancelar',
-                                  style: TextStyle(color: Colors.amber)),
+                                  style: TextStyle(
+                                      color:
+                                          Color.fromARGB(255, 155, 105, 196))),
                             ),
                             TextButton(
                                 onPressed: () {
-                                  Navigator.of(context).pop();
                                   if (codd == "pulsati") {
                                     setState(() {
-                                      total += stotal - 0.05;
+                                      total = total - 5;
                                     });
                                   }
+                                  Navigator.of(context).pop();
                                 },
                                 child: const Text(
                                   "Aplicar",
-                                  style: TextStyle(color: Colors.amber),
+                                  style: TextStyle(
+                                      color:
+                                          Color.fromARGB(255, 155, 105, 196)),
                                 ))
                           ],
                         );
